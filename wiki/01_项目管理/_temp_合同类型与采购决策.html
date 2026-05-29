@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>合同类型与采购决策</title>
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <!-- Google Fonts: Inter and Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #eff6ff;
+      --text: #1f2937;
+      --text-muted: #4b5563;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --bg-alt: #f9fafb;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background-color: var(--bg);
+      margin: 0;
+      padding: 20px;
+      font-size: 15px;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      page-break-after: avoid;
+    }
+    
+    h1 {
+      font-size: 2.2em;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    
+    h2 {
+      font-size: 1.6em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+    
+    h3 {
+      font-size: 1.25em;
+    }
+    
+    p {
+      margin-top: 0;
+      margin-bottom: 1.2em;
+    }
+    
+    /* 现代圆角卡片表格设计 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5em 0;
+      font-size: 0.95em;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      page-break-inside: avoid;
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: #ffffff;
+      text-align: left;
+      font-weight: 500;
+      padding: 12px 16px;
+    }
+    
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--bg);
+    }
+    
+    tr:nth-child(even) td {
+      background-color: var(--bg-alt);
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    /* 引用块设计 */
+    blockquote {
+      margin: 1.5em 0;
+      padding: 12px 20px;
+      background-color: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-muted);
+      font-style: normal;
+      page-break-inside: avoid;
+    }
+    
+    blockquote p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* 图片排版 */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5em auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      page-break-inside: avoid;
+    }
+    
+    /* 代码块与列表 */
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88em;
+      background-color: var(--bg-alt);
+      border-radius: 6px;
+    }
+    
+    code {
+      padding: 2px 6px;
+      color: #d97706;
+      border: 1px solid #f3f4f6;
+    }
+    
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      margin: 1.5em 0;
+      page-break-inside: avoid;
+    }
+    
+    pre code {
+      padding: 0;
+      color: inherit;
+      background-color: transparent;
+      border: none;
+    }
+    
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 1.2em;
+      padding-left: 20px;
+    }
+    
+    li {
+      margin-bottom: 0.4em;
+    }
+    
+    /* Mermaid 容器排版 */
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      margin: 2em 0;
+      background-color: var(--bg-alt);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      page-break-inside: avoid;
+    }
+    
+    .katex-block {
+      margin: 1.5em 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    
+    /* 避免打印时元素被截断 */
+    .page-break-avoid {
+      page-break-inside: avoid;
+    }
+  </style>
+  
+  <!-- Mermaid.js -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script>
+  <!-- KaTeX Auto-render -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <script>
+    // 初始化 Mermaid
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: { useMaxWidth: true, htmlLabels: true }
+    });
+    
+    window.renderReady = false;
+    
+    // 轮询检查 Mermaid 是否渲染完成（通过 data-processed 属性判断）
+    function checkMermaidReady() {
+      const divs = document.querySelectorAll('.mermaid');
+      if (divs.length === 0) {
+        window.renderReady = true;
+        return;
+      }
+      
+      const allDone = Array.from(divs).every(d => d.getAttribute('data-processed') === 'true');
+      if (allDone) {
+        window.renderReady = true;
+      } else {
+        setTimeout(checkMermaidReady, 100);
+      }
+    }
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      // 渲染 LaTeX 数学公式
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+      // 开启 Mermaid 渲染轮询
+      checkMermaidReady();
+    });
+  </script>
+</head>
+<body>
+  <hr>
+<h2>tags: [项目管理, 考点梳理, 采购管理, 合同管理]
+created: 2026-05-27
+sources: [raw/软件项目管理/纪要_05-20 项目管理核心考点解析.md, raw/软件项目管理/软件项目管理_精排.md]</h2>
+<h1>合同类型与采购决策</h1>
+<p>在进行采购决策时（如软件外包、购买第三方组件），选择适当的合同类型能够有效管理项目风险。<strong>不同合同类型下买卖双方的风险分担，是项目采购管理中最高频的选择题考点。</strong></p>
+<hr>
+<h2>📊 买方与卖方的风险分担趋势图</h2>
+<p>当采购需求从“极不明确”向“完全明确”过渡时，适用的合同类型及风险转移规律如下：</p>
+<p><img src="../images/contract_risk_chart.png" alt="买卖双方风险分担趋势图"></p>
+<hr>
+<h2>🤝 三大主流合同类型对比</h2>
+<h3>1. 总价合同 (Fixed-Price Contracts)</h3>
+<ul>
+<li><strong>定义</strong>：为交付的产品、服务或成果设定一个固定的总价格。</li>
+<li><strong>风险承担</strong>：<strong>卖方（乙方）承担最大风险</strong>。如果实际开发成本超出合同总价，超出部分由卖方自行承担。<strong>买方（甲方）风险最小</strong>。</li>
+<li><strong>适用场景</strong>：<strong>范围与需求非常明确、稳定，且后续几乎不会发生变更的项目</strong>。</li>
+<li><strong>细分类别</strong>：<ul>
+<li><strong>固定总价合同 (FFP, Firm Fixed Price)</strong>：价格完全固定，除非工作范围变更，否则不能调整。</li>
+<li><strong>总价加激励费用合同 (FPIF, Fixed Price Incentive Fee)</strong>：设定总价上限，并提供与绩效（如提前完工）挂钩的财务激励。</li>
+</ul>
+</li>
+</ul>
+<h3>2. 成本补偿合同 (Cost-Reimbursable Contracts)</h3>
+<ul>
+<li><strong>定义</strong>：买方负责向卖方报销开发过程中产生的全部<strong>实际成本</strong>，并额外支付一笔金额作为卖方的利润（通常为固定数额或百分比）。</li>
+<li><strong>风险承担</strong>：<strong>买方（甲方）承担最大风险</strong>（需要为可能发生的成本超支买单）。<strong>卖方（乙方）风险最小</strong>（哪怕超支，其成本也能获得全额报销）。</li>
+<li><strong>适用场景</strong>：<strong>项目研发性质强、技术风险极高、需求在前期极其模糊，或急需快速启动的项目</strong>。</li>
+<li><strong>细分类别</strong>：<ul>
+<li><strong>成本加固定费用 (CPFF, Cost Plus Fixed Fee)</strong>：买方报销成本，并支付一笔固定金额的利润（不随实际成本变动）。</li>
+<li><strong>成本加激励费用 (CPIF, Cost Plus Incentive Fee)</strong>：买方报销成本，若实际成本低于目标成本，买卖双方按比例（如 80/20）共享节约的金额。</li>
+<li><strong>成本加按比例收费 (CPPC, Cost Plus Percentage of Cost)</strong>：利润直接按成本的百分比提取。<strong>★ 注意 ★</strong>：此类合同会诱导乙方故意拖延、做大成本以赚取更多利润，在很多正规工程招标中是<strong>被法律所明文禁止</strong>的。</li>
+</ul>
+</li>
+</ul>
+<h3>3. 工料合同 (T&amp;M, Time and Material Contracts)</h3>
+<ul>
+<li><strong>定义</strong>：单价固定（如 1000 元/人天），但总工时未定，最终费用等于单价乘以实际消耗的时间和材料量。</li>
+<li><strong>特点</strong>：属于总价合同与成本补偿合同的混合体。为了防止成本无限蔓延，买方通常会在合同中设定**“最高限额 (Not-to-Exceed Limit)”**。</li>
+<li><strong>适用场景</strong>：<strong>项目紧急、开发规模较小、短期内需要快速补充人手，或工作内容过于简单无法确定总价时</strong>。</li>
+</ul>
+<hr>
+<h2>🔗 关联引用</h2>
+<ul>
+<li>返回：[[index|全局索引]] | [[wiki/01_项目管理/质量与综合管理要点|质量与综合管理要点]]</li>
+</ul>
+
+</body>
+</html>
+  
